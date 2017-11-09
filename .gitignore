@@ -1,0 +1,14 @@
+.idea/
+*.pyc
+
+/build
+*.o
+*.a
+*.lib
+*.so
+*.dll
+*.exe
+
+# Temp and swap files
+*.~
+*.swp

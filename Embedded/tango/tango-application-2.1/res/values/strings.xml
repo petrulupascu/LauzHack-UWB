@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">U-Tango 2.1</string>
+    <string name="save_adf">Save ADF</string>
+    <string name="adf_saving">ADF saving</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="name">Name</string>
+    <string name="set_name_dialog_title">set the ADF name</string>
+    <string name="tango_error">\"Tango Exception! Try again!\"</string>
+    <string name="tango_invalid">\"Tango Invalid Exception! Try again!\"</string>
+    <string name="tango_not_ready">\"Tango is not ready yet!\"</string>
+    <string name="tango_out_of_date_exception">\"Tango Service outdated!\"</string>
+    <string name="no_permissions">\"Permission not granted\"</string>
+    <string name="save_adf_failed_toast_format">\"Failed to save ADF \'%1$s\'.\"</string>
+    <string name="save_adf_success_toast_format">\"Saved ADF \'%1$s\' (%2$s).\"</string>
+    <string name="api_adfs">Project Tango Local ADFs</string>
+    <string name="application_adfs">Application ADFs</string>
+    <string-array name="set_dialog_menu_items_api_space">
+        <item>Rename</item>
+        <item>Delete from API space</item>
+        <item>Export to App space</item>
+    </string-array>
+    <string-array name="set_dialog_menu_items_app_space">
+        <item>Delete from  App space</item>
+        <item>Import to API space</item>
+    </string-array>
+    <string name="adf_exists_api_space">\"Tango Error! ADF already exists in API Space.\"</string>
+    <string name="adf_exists_app_space">\"Tango Error! ADF already exists in app space or File system.\"</string>
+    <string name="no_uuid_tango_error">\"No ADF with that UUID!\"</string>
+    <string name="uuid">UUID</string>
+    <string name="metadata_not_read">\"Meta Data cannot be read\"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="udp_ip_saved">160.98.</string>
+</resources>
