@@ -11,7 +11,7 @@ def eprint(*args, **kwargs):
 class DataWriter():
     locker = RLock()
 
-    def __init__(self, targetfile, header, verbose=True, verbose_interval=10):
+    def __init__(self, targetfile, header, verbose=False, verbose_interval=10):
         self.csvfile = open(targetfile, 'w')
         self.csvwriter = csv.writer(self.csvfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         self.verbose = verbose
@@ -24,8 +24,8 @@ class DataWriter():
     def writeline(self, dictionary):
         """
         write the data from dictionary to the log file
-        :param dictionary: 
-        :return: 
+        :param dictionary: Entries of the dictionary must be contained in the self.header array
+        :return: None 
         """
         # we lock this part because we don't want two scripts writing in the same time
         with self.locker:

@@ -1,16 +1,6 @@
 import serial
 from time import time
 from threading import Thread
-from main import data_fields
-
-
-# TODO: Hey fellow lauzhacker, Have you placed the 4 Pozyx anchors? You may want to measure their x,y,z positions.
-# The Arduino will send you some data through the serial port.
-# Among these data there are the coordinates (x,y,z) that the Arduino computes for you.
-# If you want to use them, you will have to modify the anchors coordinates in the Arduino sketch:
-# pozyx/Arduino/multiple_range.ino
-# Finally you will have to upload the sketch to the Arduino.
-#
 
 """
 Thread class for acquiring Pozyx data. On linux you must enter the following command in the terminal to allow USB access
@@ -48,8 +38,7 @@ class PozyxAcquisition(Thread):
                     print(line[:-1])
 
             # --------------- TIME SYNCHRONIZATION ------------------
-            # All this synchronization stuff is useful when working with an Arduino-Wifi. Otherwise it's kind of useless
-            # However the Arduino
+            #
             Nb_pingpong = 100
             roundtrip = 0
             for k in range(Nb_pingpong):
@@ -131,7 +120,7 @@ class PozyxAcquisition(Thread):
                         estimated_err = -0.008033*distance + 0.175
                         estimated_var = 0.000147*distance + 0.0002835
 
-
+                        # pack the data into this dico with entries according to the "data_fields" of the main
                         dico = {
                             "timestamp": timestamp,
                             "device_id": self.device_id,
@@ -145,11 +134,5 @@ class PozyxAcquisition(Thread):
                         }
 
                         # format data to a list corresponding to headers defined in main.data_fields
-                        towrite = [dico[f] if f in list(dico.keys()) else 'NaN' for f in data_fields]
-
                         if self.datawriter is not None:
-                            self.datawriter.writeline(towrite)
-
-
-    def onDestroy(self):
-        print("Pozyx onDestroy()")
+                            self.datawriter.writeline(dico)

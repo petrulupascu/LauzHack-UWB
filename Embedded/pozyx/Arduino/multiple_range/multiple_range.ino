@@ -26,11 +26,13 @@ uint16_t remote_id = anchors[0];
 uint8_t data = 0;
 ////////////////////////////////////////////////
 // POSITIONING PARAMETERS
+
+// TODO: Hey fellow lauzhacker, you may want to set anchors_x, anchors_y and heights if you want the areduino to compute the x,y,z position for you
 bool use_positioning = true;
 uint8_t num_anchors = 4;
-int32_t anchors_x[4] = { 6800, 2280,     0,  3970};            // anchor x-coorindates in mm
-int32_t anchors_y[4] = {-2740,    0, -2980, -9600};            // anchor y-coordinates in mm
-int32_t heights[4] =   { 1960, 2010,  2480,  2060};
+int32_t anchors_x[4] = { 6800, 2280,     0,  3970};            // anchor x-coorindates in millimeters
+int32_t anchors_y[4] = {-2740,    0, -2980, -9600};            // anchor y-coordinates in millimeters
+int32_t heights[4] =   { 1960, 2010,  2480,  2060};            // anchor z-coordinates in millimeters
 uint8_t algorithm = POZYX_POS_ALG_UWB_ONLY; // POZYX_POS_ALG_LS;
 uint8_t dimension = POZYX_3D;
 int32_t height = 1000;

@@ -63,20 +63,3 @@ class TangoAcquisition(Thread):
                 # Feed datawriter
                 if self.datawriter is not None:
                     self.datawriter.writeline(dico)
-
-
-if __name__ == '__main__':
-    from data_writer import DataWriter
-    import local_config
-
-    i = 0
-    file_path = "data/tango/tango_data_" + str(i) + ".csv"
-    while os.path.exists(file_path):
-        i += 1
-        file_path = "data/tango/tango_data_" + str(i) + ".csv"
-
-    datawriter = DataWriter(file_path, verbose=False)
-
-    tango = TangoAcquisition(UDP_IP=local_config.UDP_IP, UDP_PORT=7585, datawriter=datawriter)
-
-    tango.run()

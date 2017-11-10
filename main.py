@@ -7,14 +7,18 @@ from tango_acquisition_thread import TangoAcquisition
 from pozyx_acquisition_thread import PozyxAcquisition
 import ubiment_parameters as UBI
 
-
+# TODO: Hey fellow lauzhacker, make sure you allow serial access before using the Pozyx system:
+# TODO: $ sudo chmod 777 /dev/ttyACM0
 # CHOOSE THE SYSTEMS YOU WANT TO USE.
-pozyx = False
-tango = True
+use_pozyx = False
+use_tango = False
+
+if not use_pozyx and not use_tango:
+    print("WARNING: You have to enable at least 1 positioning system.")
 
 # the file where you will output the data
 file_path = os.path.join(os.path.dirname(__file__), 'data/data.csv')
-# this get automatically your ip address. However you may want to verify with the command ifconfig
+# this get automatically your ip address. However you may want to verify with the command $ ifconfig
 local_ip = socket.gethostbyname(socket.gethostname())
 # serial port where you plugged the pozyx-arduino
 usb_port = '/dev/ttyACM0'
@@ -23,8 +27,8 @@ usb_port = '/dev/ttyACM0'
 # The logs are written in a csv file using the following headers
 data_fields = [
     "timestamp",        # time in milliseconds in epoch time
-    "device_id",        # the device we want to locate (previously named tag_id)
-    "system_id",        # TANGO has system id 7585, and Pozyx has 115200
+    "device_id",        # the device we want to locate
+    "system_id",        # TANGO has system id 7585, and Pozyx has 115200 (also used for socket port and baudrate)
     "anchor_id",        # anchor used to take the current measure
     "px",               # [px, py, pz] is the position of the device in world coordinate
     "py",
@@ -36,15 +40,15 @@ data_fields = [
     "rssi",             # received signal strength
 ]
 
-threads_list = []
 
 # Initialize the datawriter which will log the received measures in a csv file
-datawriter = DataWriter(file_path, header=data_fields)
+datawriter = DataWriter(file_path, header=data_fields, verbose=True, verbose_interval=1)
 
 # ----------- initialize the threads -------------------
-if pozyx:
-    threads_list.append(PozyxAcquisition(usb_port=usb_port, baudrate=115200, datawriter=datawriter))
-if tango:
+threads_list = []
+if use_pozyx:
+    threads_list.append(PozyxAcquisition(usb_port=usb_port, datawriter=datawriter))
+if use_tango:
     threads_list.append(TangoAcquisition(local_ip=local_ip, datawriter=datawriter))
 
 # start the threads
