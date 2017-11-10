@@ -1,9 +1,9 @@
 # LauzHack Vidinoti Example
 
-This application fetch data from the differents localization systems Pozyx and/or TANGO, and output them with a common format.
+This application fetch data from the differents localization systems (Pozyx and/or TANGO), and output them with a common format.
 
 ### Installation
-This application has been coded in python 3.5
+This application has been coded in python 3.5.
 If you intend to use the Pozyx system, you will need to install the additional package pyserial
 
 Commands for linux
@@ -13,7 +13,7 @@ pip3 install pyserial
 ```
 
 ### Running the application
-Go to the main script and set variable __use_pozyx__ and __use_tango__ to __True__ or __False__ depending on which system you want to use
+Go to the main script and set variable __use_pozyx__ and __use_tango__ to __True__ or __False__ depending on which system you want to use.
 Then simply use the command:
 `python3 main.py`
 
@@ -25,7 +25,7 @@ sudo chmod 777 /dev/ttyACM0
 ### Data Output
 Each acquisition systems provide different kind of measurements. The data are logged into a csv file (default ./data/data.csv).
 
-The very first line correspond to the header, and all following line correspond to a single mesurement between 1 device and 1 anchor.
+The very first line corresponds to the header, and all following line correspond to a single mesurement between 1 device and 1 anchor.
 The columns are separated by commas (,) and missing values are completed by NaN.
 
 ## Pozyx
@@ -49,7 +49,7 @@ It is also possible to directly get the (x,y,z) coordinates computed by the Ardu
 And then to upload the sketch to the Arduino.
 
 ## TANGO
-The TANGO device can scan and learn and localize itself in an area.
+The TANGO device can scan an area and save it into an ADF file (Area Description File). Then it is able to localize itself in this area.
 https://developers.google.com/tango/
 
 ### TANGO Inventory
@@ -62,11 +62,11 @@ We provide an application where the device will sends the localization data to y
 The source code of the application is in ./Embedded/tango-application-2.1/
 
 ##### Getting Started with Exploration
-1) Choose your area an think about a coordinates systems. (choose origin and axis orientation)
+1) Choose your area an think about a coordinate systems. (choose origin and axis orientation)
 1) Make sure that both of your computer and TANGO can connect to the same WiFi network.
 1) On TANGO, start the application __U-Tango 2.1__ and go to __Explore__
 1) Place the TANGO at the origin of your system, the camera looking in the Y direction
-1) Press __Explore off__ to start learning the area. Then have a walk scanning your environment.
+1) Turn on the exploration and have a walk scanning your environment.
 1) When your done, save your ADF file.
 
 ##### Getting started with Localization
@@ -81,25 +81,25 @@ The source code of the application is in ./Embedded/tango-application-2.1/
 ### Troubleshoot: When sockets don't work
 
 If code is stucked at line "json_str, addr = sock.recvfrom(1024)" it means that nothing is coming out of the socket:
-1) Enable either Wi-Fi or Ethernet but not both at the same time
-2) Is the internet connection OK?
-3) Verify that the IP used for the TANGO socket does match your actual IP
-4) Is this computer connected to the same wifi network than the TANGO device?
-5) Try using another WiFI.
+- Enable either Wi-Fi or Ethernet but not both at the same time
+- Is the internet connection OK?
+- Verify that the IP used for the TANGO socket does match your actual IP
+- Is this computer connected to the same wifi network than the TANGO device?
+- Try using another WiFI.
 
 If you get the following: "OSError: [Errno 98] Address already in use" at line "sock.bind((self.UDP_IP, self.UDP_PORT))"
-1) The script is already running somewhere. Close all other running scripts.
-2) FOR PYCHARM USERS: A script has been disconnected from PyCharm but it is still running.
+- The script is already running somewhere. Close all other running scripts.
+- FOR PYCHARM USERS: A script has been disconnected from PyCharm but it is still running.
     You need to kill it from terminal (linux):
 
-      - Find python PID: `$ pidof python3.5`
-      - Verify it correspond to the process you want to kill (second element of the following output)  `$ ps aux | grep python3.5`
-      - Kill the process  `$ kill -9 $(pidof python3.5)`
+    1) Find python PID: `$ pidof python3.5`
+    1) Verify it correspond to the process you want to kill (second element of the following output)  `$ ps aux | grep python3.5`
+    1) Kill the process  `$ kill -9 $(pidof python3.5)`
 
 If you get: "socket.gaierror: [Errno -2] Name or service not known" at line "socket.gethostbyname(socket.gethostname())"
-1) Try disable and re-enable the Ethernet connection
-2) FOR PYCHARM USERS: Try restart PyCharm
+- Try disable and re-enable the Ethernet connection
+- FOR PYCHARM USERS: Try restart PyCharm
 
 If you get: OSError: [Errno 99] Cannot assign requested address
-1) Verify that the IP used for the TANGO socket does match your actual IP
-2) Otherwise that's no luck, you have to reboot.
+- Verify that the IP used for the TANGO socket does match your actual IP
+- Otherwise that's no luck, you have to reboot.
