@@ -9,20 +9,22 @@ import os
 # More information here: https://developers.google.com/tango/overview/coordinate-systems
 
 class TangoAcquisition(Thread):
-    def __init__(self, LOCAL_IP, datawriter=None):
+    def __init__(self, local_ip, datawriter=None):
         print("Tango Acquisition Thread init()")
         Thread.__init__(self)
         self.setDaemon(True)  # if the main thread finish, it will finish as well
         self.datawriter = datawriter
 
         # The mobile phone sends some TCP packet through a socket at on a certain port and IP address.
-        self.LOCAL_IP = LOCAL_IP  # you can find your own IPv4 address using the command "ifconfig" in linux terminal
+        self.LOCAL_IP = local_ip  # you can find your own IPv4 address using the command "ifconfig" in linux terminal
         self.SOCKET_PORT = 7585  #7585 for Tango device
 
     def run(self):
         print("Tango run()")
         toprint = set([])
         measure_list = []
+
+        print("TANGO: Open socket on port ", self.SOCKET_PORT, " with IP ", self.LOCAL_IP)
         with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             sock.bind((self.LOCAL_IP, self.SOCKET_PORT))
             while True:
@@ -42,10 +44,13 @@ class TangoAcquisition(Thread):
 
                 timeStamps = int(float(timeStamps))
 
+                # As anchor_id, we use the id of the ADF file (hexadecimal string), translated to a decimal integer
+                anchor_id = int(adf_uuid.replace('-', ''), 16)
+
                 dico = {
                     "timestamp": timeStamps,
                     "device_id": device_id,
-                    "system_id": self.SOCKET_PORT, # we use the port as id
+                    "system_id": self.SOCKET_PORT,  # we use the port as id
                     "anchor_id": anchor_id,
                     "px": localPos_x,
                     "py": localPos_y,
@@ -55,12 +60,9 @@ class TangoAcquisition(Thread):
                     "theta_z": localTheta_z
                 }
 
-                # format data to a list corresponding to headers defind in main.data_fields
-                towrite = [dico[f] if f in list(dico.keys()) else 'NaN' for f in data_fields]
-
                 # Feed datawriter
                 if self.datawriter is not None:
-                    self.datawriter.writeline(towrite)
+                    self.datawriter.writeline(dico)
 
 
 if __name__ == '__main__':
@@ -75,6 +77,6 @@ if __name__ == '__main__':
 
     datawriter = DataWriter(file_path, verbose=False)
 
-    tango = TangoAcquisitionNoFP(UDP_IP=local_config.UDP_IP, UDP_PORT=7585, datawriter=datawriter)
+    tango = TangoAcquisition(UDP_IP=local_config.UDP_IP, UDP_PORT=7585, datawriter=datawriter)
 
     tango.run()
