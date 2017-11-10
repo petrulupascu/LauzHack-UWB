@@ -59,8 +59,9 @@ https://developers.google.com/tango/
 
 ### Our TANGO Application
 We provide an application where the device will sends the localization data to your computer.
+The source code of the application is in ./Embedded/tango-application-2.1/
 
-##### Getting Started with exploration
+##### Getting Started with Exploration
 1) Choose your area an think about a coordinates systems. (choose origin and axis orientation)
 1) Make sure that both of your computer and TANGO can connect to the same WiFi network.
 1) On TANGO, start the application __U-Tango 2.1__ and go to __Explore__
