@@ -1,11 +1,19 @@
 import serial
 from time import time
 from threading import Thread
+import bluetooth
 
 """
 Thread class for acquiring Pozyx data. On linux you must enter the following command in the terminal to allow USB access
 sudo chmod 777 /dev/ttyACM0
 """
+def cont():
+    bd_addr = "5C:51:81:BD:63:22"
+    port = 1
+    sock=bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    sock.connect((bd_addr, port))
+    sock.send("hello!!")
+    sock.close()
 
 class PozyxAcquisition(Thread):
     def __init__(self, usb_port, baudrate=115200, datawriter=None):
@@ -119,7 +127,7 @@ class PozyxAcquisition(Thread):
                         # measured distance.
                         estimated_err = -0.008033*distance + 0.175
                         estimated_var = 0.000147*distance + 0.0002835
-
+                        cont()
                         # pack the data into this dico with entries according to the "data_fields" of the main
                         dico = {
                             "timestamp": timestamp,

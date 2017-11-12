@@ -10,7 +10,7 @@ import ubiment_parameters as UBI
 # TODO: Hey fellow lauzhacker, make sure you allow serial access before using the Pozyx system:
 # TODO: $ sudo chmod 777 /dev/ttyACM0
 # CHOOSE THE SYSTEMS YOU WANT TO USE.
-use_pozyx = False
+use_pozyx = True
 use_tango = False
 
 if not use_pozyx and not use_tango:
